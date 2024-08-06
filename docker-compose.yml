@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  4quality:
+    build: .
+    image: 'php:8.2-apache'
+    container_name: 4quality
+    ports:
+      - '44001:80'
+    volumes:
+      - ./project:/var/www/html
+    networks:
+      - network
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  mysql:
+    container_name: bd_mysql
+    image: mysql:8.0
+    ports:
+      - '44002:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=remote
+      - MYSQL_DATABASE=4quality
+    volumes:
+      - ./project/mysql:/var/lib/mysql
+    networks:
+      - network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_4quality
+    ports:
+      - '44003:80'
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: remote
+    networks:
+      - network
+networks:
+  network:
+    driver: bridge
