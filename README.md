@@ -16,3 +16,4 @@ Os arquivos SQL para gerar o banco de dados estão localizados na pasta `project
   - User: root | - Password: remote | - Database: 4quality
 - O phpMyAdmin está na porta `localhost:44003`
 
+
